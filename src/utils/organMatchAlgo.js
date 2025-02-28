@@ -186,10 +186,16 @@ export const matchOrgans = (recipientData) => {
   });
 
   console.log("Compatible Donors:", compatibleDonors);
-  return compatibleDonors; // Temporarily skip sorting for debugging
+  return compatibleDonors; // Skip sorting for now
 };
 
 const calculateDistance = (loc1, loc2) => {
   const locationMap = { "New York": 0, "Boston": 300, "Chicago": 1200 };
-  return Math.abs((locationMap[loc1] || 0) - (locationMap[loc2] || 0)) || 1000;
+  const dist1 = locationMap[loc1];
+  const dist2 = locationMap[loc2];
+  if (dist1 === undefined) console.log(`Location not found in map: ${loc1}`);
+  if (dist2 === undefined) console.log(`Location not found in map: ${loc2}`);
+  const distance = Math.abs((dist1 ?? 0) - (dist2 ?? 0));
+  console.log(`Distance between ${loc1} and ${loc2}: ${distance}km`);
+  return distance;
 };
