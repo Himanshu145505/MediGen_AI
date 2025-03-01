@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { matchOrgans } from '../utils/organMatchAlgo';
 import { User, Calendar, Droplet, HeartPulse, MapPin, Scale, FileText } from 'lucide-react';
 import "../index.css";
@@ -51,6 +51,7 @@ const OrganMatchForm = () => {
   });
   const [matches, setMatches] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -76,20 +77,65 @@ const OrganMatchForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const saveUnmatchedRecipient = async (recipientData) => {
+    try {
+      // Fetch current unmatchedrecipients.json (for simulation)
+      let currentData = [];
+      const response = await fetch('/unmatchedrecipients.json');
+      if (response.ok) {
+        currentData = await response.json();
+      } else {
+        console.warn('unmatchedrecipients.json not found, starting with empty array');
+      }
+
+      // Append new recipient
+      const updatedData = [...currentData, { ...recipientData, timestamp: new Date().toISOString() }];
+
+      // Simulate saving (log for demo)
+      console.log('Simulated save to unmatchedrecipients.json:', updatedData);
+
+      // Store in localStorage
+      localStorage.setItem('unmatchedRecipients', JSON.stringify(updatedData));
+
+      return true; // Indicate success
+    } catch (error) {
+      console.error('Error in saveUnmatchedRecipient:', error);
+      // Fallback to localStorage
+      const currentLocal = JSON.parse(localStorage.getItem('unmatchedRecipients')) || [];
+      const updatedLocal = [...currentLocal, { ...recipientData, timestamp: new Date().toISOString() }];
+      localStorage.setItem('unmatchedRecipients', JSON.stringify(updatedLocal));
+      return true; // Still consider it a success for demo
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.saveSearch && !formData.searchName) {
       alert("Please enter a name for your saved search.");
       return;
     }
-    console.log("Form Data Submitted:", formData); // Add this
+    console.log("Form Data Submitted:", formData);
     setIsLoading(true);
     const matchResults = matchOrgans(formData);
     setMatches(matchResults);
     setIsLoading(false);
     console.log("Recipient Data:", formData);
     console.log("Matches:", matchResults);
-    alert(matchResults.length > 0 ? `Found ${matchResults.length} transplant-ready matches!` : "No transplant-ready matches found.");
+
+    if (matchResults.length > 0) {
+      setNotifications((prev) => [...prev, `Found ${matchResults.length} transplant-ready matches!`]);
+    } else {
+      const saved = await saveUnmatchedRecipient(formData);
+      if (saved) {
+        setNotifications((prev) => [...prev, `No matches found for Patient ${formData.patientId}. Saved to unmatchedrecipients.json.`]);
+      } else {
+        setNotifications((prev) => [...prev, `No matches found for Patient ${formData.patientId}. Failed to save.`]);
+      }
+    }
+  };
+
+  const clearNotification = (index) => {
+    setNotifications((prev) => prev.filter((_, i) => i !== index));
   };
 
   const renderOrganSpecificFields = () => {
@@ -138,9 +184,21 @@ const OrganMatchForm = () => {
 
   return (
     <div className="medical-card max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-md">
+      {/* Notifications */}
+      {notifications.length > 0 && (
+        <div className="mb-4 space-y-2">
+          {notifications.map((note, index) => (
+            <div key={index} className="notification bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-r-lg flex justify-between items-center">
+              <span>{note}</span>
+              <button onClick={() => clearNotification(index)} className="text-red-500 hover:text-red-700 font-bold">✕</button>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="flex items-center gap-3 mb-8 border-b pb-4">
         <HeartPulse className="h-8 w-8 text-red-600 floating-element" />
-        <h1 className="text-2xl font-bold text-gray-900">Organ Match Search Tool</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Find an Organ Match</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -531,11 +589,25 @@ const OrganMatchForm = () => {
               {matches.map((donor) => (
                 <li key={donor.donorId} className="match-result">
                   <p><strong>Donor ID:</strong> {donor.donorId}</p>
-                  <p><strong>Organ:</strong> {donor.organAvailable} ({donor.organSpecification})</p>
+                  <p><strong>Age:</strong> {donor.age}</p>
+                  <p><strong>Gender:</strong> {donor.gender}</p>
+                  <p><strong>Height:</strong> {donor.height} cm</p>
+                  <p><strong>Weight:</strong> {donor.weight} kg</p>
                   <p><strong>Blood Type:</strong> {donor.bloodType}</p>
-                  <p><strong>HLA:</strong> A:{donor.hlaTypingA}, B:{donor.hlaTypingB}, DR:{donor.hlaTypingDR}</p>
+                  <p><strong>Organ:</strong> {donor.organAvailable} ({donor.organSpecification})</p>
+                  <p><strong>Organ Size:</strong> {donor.organSize} {donor.organAvailable === "Kidney" ? "cm" : "g"}</p>
+                  <p><strong>HLA Typing:</strong> A:{donor.hlaTypingA}, B:{donor.hlaTypingB}, DR:{donor.hlaTypingDR}</p>
+                  <p><strong>CMV Status:</strong> {donor.cmvStatus}</p>
+                  <p><strong>Hepatitis B Status:</strong> {donor.hepBStatus}</p>
+                  <p><strong>Hepatitis C Status:</strong> {donor.hepCStatus}</p>
+                  <p><strong>HIV Status:</strong> {donor.hivStatus}</p>
+                  <p><strong>Other Viral Status:</strong> {donor.otherViralStatus}</p>
+                  <p><strong>Crossmatch Result:</strong> {donor.crossmatchResult}</p>
                   <p><strong>Location:</strong> {donor.location} (~{calculateDistance(formData.currentLocation, donor.location)} km)</p>
+                  <p><strong>Cold Ischemia Time:</strong> {donor.coldIschemiaTime} hours</p>
+                  <p><strong>Extended Criteria Donor:</strong> {donor.isExtendedCriteria ? "Yes" : "No"}</p>
                   <p><strong>Conditions:</strong> {donor.conditions.length > 0 ? donor.conditions.join(", ") : "None"}</p>
+                  <p><strong>Status:</strong> Transplant-Ready</p>
                 </li>
               ))}
             </ul>
@@ -549,7 +621,7 @@ const OrganMatchForm = () => {
 };
 
 const calculateDistance = (loc1, loc2) => {
-  const locationMap = { "New York": 0, "Boston": 300, "Chicago": 1200 };
+  const locationMap = { "New York": 0, "Boston": 300, "Chicago": 1200 }; // Update this with your India-centric locations if needed
   return Math.abs((locationMap[loc1] || 0) - (locationMap[loc2] || 0)) || 1000;
 };
 

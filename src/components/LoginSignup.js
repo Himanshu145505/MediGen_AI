@@ -60,7 +60,7 @@ const LoginSignup = () => {
           <div className="depth-effect inline-block bg-white p-4 rounded-full shadow-lg mb-4">
             <Stethoscope className="w-12 h-12 text-blue-600 floating-element" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">MediCare Pro</h1>
+          <h1 className="text-3xl font-bold text-gray-800">MediGen AI</h1>
           <p className="text-gray-600 mt-2">Your Health, Our Priority</p>
         </div>
 

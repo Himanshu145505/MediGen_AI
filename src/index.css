@@ -186,3 +186,132 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f0f4f8;
+  color: #333;
+}
+
+/* Medical Card */
+.medical-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 80rem;
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+/* Labels and Inputs */
+.medical-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #34495e;
+  margin-bottom: 0.5rem;
+}
+
+/* Input Container for Icons */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.medical-input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* Left padding for icon */
+  border: 1px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.medical-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+/* Icon Styling */
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #7f8c8d;
+}
+
+/* Checkbox Styling */
+.medical-checkbox {
+  accent-color: #3498db;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  background: #2ecc71;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Match Results */
+.match-result {
+  background: #e6ffe6;
+  border: 2px solid #27ae60;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+.match-result strong {
+  color: #27ae60;
+}
+
+/* No Matches Message */
+.no-matches {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e74c3c;
+  padding: 1rem;
+  background: #ffe6e6;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #3498db;
+  padding: 1rem;
+}

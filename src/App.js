@@ -9,7 +9,8 @@ import RecommendationsPage from "./components/RecommendationsPage";
 import ChatbotPage from "./components/ChatbotPage";
 import OnboardingContainer from "./components/OnboardingContainer";
 import ThreeDSimulation from "./components/ThreeDSimulation";
-import OrganMatchForm from "./components/OrganMatchForm"; // Match the file name
+import OrganMatchForm from "./components/OrganMatchForm";
+import UnmatchedRecipients from "./components/UnmatchedRecipients"; // Add this
 
 const App = () => {
   return (
@@ -24,7 +25,8 @@ const App = () => {
         <Route path="/recommendations" element={<RecommendationsPage />} />
         <Route path="/chatbot" element={<ChatbotPage />} />
         <Route path="/3d-simulation" element={<ThreeDSimulation />} />
-        <Route path="/organ-match" element={<OrganMatchForm />} /> {/* Update to OrganMatchForm */}
+        <Route path="/organ-match" element={<OrganMatchForm />} />
+        <Route path="/unmatched-recipients" element={<UnmatchedRecipients />} /> {/* Add this */}
       </Routes>
     </Router>
   );
