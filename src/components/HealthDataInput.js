@@ -132,7 +132,7 @@ const HealthDataInput = () => {
     <div className="medical-card max-w-3xl mx-auto">
       <div className="flex items-center gap-3 mb-8">
         <FileText className="h-8 w-8 text-blue-600 floating-element" />
-        <h1 className="text-2xl font-bold text-gray-900">Medical Report Generator</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Transplant Analysis</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">

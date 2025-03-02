@@ -1,86 +1,12 @@
-// import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import WelcomePage1 from "../images/wp.png"; // Import the image
-
-// const WelcomePage = () => {
-//   const navigate = useNavigate();
-
-//   const handleGetStarted = () => {
-//     navigate('/onboarding'); // Navigate to the first onboarding page
-//   };
-
-//   return (
-//     <div style={styles.container}>
-//       <div style={styles.content}>
-//         <h1 style={styles.title}>Welcome to MediGen AI</h1>
-//         <p style={styles.subtitle}>
-//           Your partner in personalized health insights and cutting-edge 3D visualization.
-//         </p>
-        
-//         {/* Display the image with styles */}
-//         <img src={WelcomePage1} alt="Welcome" style={styles.image} />
-
-//         <button style={styles.button} onClick={handleGetStarted}>
-//           Get Started
-//         </button> 
-//       </div>
-//     </div>
-//   );
-// };
-
-// const styles = {
-//   container: {
-//     backgroundColor: '#E8F3FF',
-//     height: '100vh',
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     textAlign: 'center',
-//   },
-//   content: {
-//     maxWidth: '400px',
-//     padding: '20px',
-//   },
-//   title: {
-//     fontSize: '28px',
-//     fontWeight: 'bold',
-//     marginBottom: '10px',
-//     color: '#004B8D',
-//   },
-//   subtitle: {
-//     fontSize: '16px',
-//     color: '#555',
-//     marginBottom: '20px',
-//   },
-//   image: {
-//     width: '100%', // Adjust image size as needed
-//     height: 'auto', // Maintain aspect ratio
-//     marginBottom: '20px',
-//   },
-//   button: {
-//     backgroundColor: '#007BFF',
-//     color: '#FFF',
-//     border: 'none',
-//     padding: '12px 20px',
-//     borderRadius: '50px',
-//     fontSize: '16px',
-//     cursor: 'pointer',
-//     outline: 'none',
-//     boxShadow: '0 4px 6px rgba(0, 123, 255, 0.2)',
-//   },
-// };
-
-// export default WelcomePage;
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Stethoscope, ChevronRight, Brain, Activity } from 'lucide-react';
+import { Stethoscope, ChevronRight, HeartPulse, Dna, Activity } from 'lucide-react';
 
 const WelcomePage = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/onboarding');
+    navigate('/onboarding'); // Changed to /home for doctor dashboard
   };
 
   return (
@@ -97,11 +23,11 @@ const WelcomePage = () => {
           </div>
           
           <h1 className="text-4xl font-bold text-gray-900">
-            MediGen <span className="text-blue-600">AI</span>
+            MediGen <span className="text-blue-600">Pro</span>
           </h1>
           
           <p className="text-gray-600 text-lg max-w-sm mx-auto">
-            Your partner in personalized health insights and cutting-edge 3D visualization
+            Empowering doctors with AI-driven organ transplant solutions
           </p>
         </div>
 
@@ -109,18 +35,34 @@ const WelcomePage = () => {
         <div className="grid grid-cols-2 gap-4 py-8">
           <div className="bg-white p-4 rounded-xl shadow-md">
             <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3 mx-auto">
-              <Brain className="w-6 h-6 text-blue-600" />
+              <HeartPulse className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="text-sm font-semibold text-gray-900">AI Powered</h3>
-            <p className="text-xs text-gray-500 mt-1">Smart health insights</p>
+            <h3 className="text-sm font-semibold text-gray-900">Organ Matching</h3>
+            <p className="text-xs text-gray-500 mt-1">Fast donor pairing</p>
           </div>
           
           <div className="bg-white p-4 rounded-xl shadow-md">
             <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3 mx-auto">
+              <Dna className="w-6 h-6 text-blue-600" />
+            </div>
+            <h3 className="text-sm font-semibold text-gray-900">Smart Alerts</h3>
+            <p className="text-xs text-gray-500 mt-1">Match notifications</p>
+          </div>
+
+          <div className="bg-white p-4 rounded-xl shadow-md">
+            <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3 mx-auto">
               <Activity className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="text-sm font-semibold text-gray-900">3D Visuals</h3>
-            <p className="text-xs text-gray-500 mt-1">Interactive models</p>
+            <h3 className="text-sm font-semibold text-gray-900">3D Visualization</h3>
+            <p className="text-xs text-gray-500 mt-1">Surgical planning</p>
+          </div>
+
+          <div className="bg-white p-4 rounded-xl shadow-md">
+            <div className="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center mb-3 mx-auto">
+              <Stethoscope className="w-6 h-6 text-blue-600" />
+            </div>
+            <h3 className="text-sm font-semibold text-gray-900">Health Insights</h3>
+            <p className="text-xs text-gray-500 mt-1">Data-driven analysis</p>
           </div>
         </div>
 
@@ -135,11 +77,11 @@ const WelcomePage = () => {
                 <ChevronRight className="w-6 h-6" />
               </div>
             </div>
-            <span className="relative z-10">Get Started</span>
+            <span className="relative z-10">Start Assisting</span>
           </button>
           
           <p className="mt-4 text-sm text-gray-500">
-            Experience the future of healthcare
+            Precision tools for transplant excellence
           </p>
         </div>
       </div>
